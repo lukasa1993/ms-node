@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  ms-node:
+    image: mtkvnela/ld_node:latest
+    container_name: ms-node
+    restart: always
+    healthcheck:
+      test: [ "CMD", "wget", "-qO-", "http://localhost:7702/health" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - /opt/app/node_modules
+      - .:/opt/app
+    working_dir: /opt/app
+    networks:
+      - ms
+
+networks:
+  ms:
